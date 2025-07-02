@@ -53,7 +53,7 @@ object Server {
         embeddedServer(Netty, PortConfig.HTTP_PORT) {
             routing {
                 get("/") {
-                    call.respondText("Hello, world!1", ContentType.Text.Html)
+                    call.respondText("Hello, world!2\n", ContentType.Text.Html)
                 }
             }
         }.start(wait = true)
