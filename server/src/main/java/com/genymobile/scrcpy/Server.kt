@@ -24,6 +24,12 @@ import com.genymobile.scrcpy.video.ScreenCapture
 import com.genymobile.scrcpy.video.SurfaceCapture
 import com.genymobile.scrcpy.video.SurfaceEncoder
 import com.genymobile.scrcpy.video.VideoSource
+import io.ktor.http.ContentType
+import io.ktor.server.engine.embeddedServer
+import io.ktor.server.netty.Netty
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.get
+import io.ktor.server.routing.routing
 import java.io.File
 import java.io.IOException
 
@@ -37,6 +43,19 @@ object Server {
                 .dropLastWhile { it.isEmpty() }.toTypedArray()
         // By convention, scrcpy is always executed with the absolute path of scrcpy-server.jar as the first item in the classpath
         SERVER_PATH = classPaths[0]
+    }
+
+    /**
+     * 开启http server
+     */
+    private fun startHttpServer() {
+        embeddedServer(Netty, 8080) {
+            routing {
+                get("/") {
+                    call.respondText("Hello, world!", ContentType.Text.Html)
+                }
+            }
+        }.start(wait = true)
     }
 
     @Throws(IOException::class, ConfigurationException::class)
@@ -247,7 +266,8 @@ object Server {
         }
 
         try {
-            scrcpy(options)
+            startHttpServer()
+//            scrcpy(options)
         } catch (e: ConfigurationException) {
             // Do not print stack trace, a user-friendly error-message has already been logged
         }

@@ -6,7 +6,7 @@ android {
     compileSdk 35
     defaultConfig {
         applicationId "com.genymobile.scrcpy"
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 35
         versionCode 30301
         versionName "3.3.1"
@@ -22,11 +22,26 @@ android {
         buildConfig true
         aidl true
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+    packaging {
+        resources {
+            excludes += ['META-INF/INDEX.LIST', 'META-INF/io.netty.versions.properties']
+        }
+    }
 }
 
 dependencies {
-    //noinspection GradleDependency
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:2.0.21"
+    //noinspection GradleDependencyleVersion
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:2.1.21"
+    implementation("io.ktor:ktor-server-netty:3.2.0")
+
     testImplementation 'junit:junit:4.13.2'
 }
 
