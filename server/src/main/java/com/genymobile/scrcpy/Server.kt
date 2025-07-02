@@ -24,6 +24,7 @@ import com.genymobile.scrcpy.video.ScreenCapture
 import com.genymobile.scrcpy.video.SurfaceCapture
 import com.genymobile.scrcpy.video.SurfaceEncoder
 import com.genymobile.scrcpy.video.VideoSource
+import com.soug.mm.base.config.PortConfig
 import io.ktor.http.ContentType
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
@@ -49,10 +50,10 @@ object Server {
      * 开启http server
      */
     private fun startHttpServer() {
-        embeddedServer(Netty, 8080) {
+        embeddedServer(Netty, PortConfig.HTTP_PORT) {
             routing {
                 get("/") {
-                    call.respondText("Hello, world!", ContentType.Text.Html)
+                    call.respondText("Hello, world!1", ContentType.Text.Html)
                 }
             }
         }.start(wait = true)
